@@ -1,0 +1,68 @@
+Dado el siguiente árbol B de orden 5, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +320, -390, -400, -533. Justificar detalladamente cada
+operación indicando lecturas y escrituras en orden de ocurrencia. Para la resolución de
+underflow debe utilizar política a izquierda. Graficar cada operación por separado.
+
+   
+                  2: 0 (220) 1 (390) 4 (455) 5 (541) 3
+
+0: (10)(150) 1: (225)(241)(331)(360) 4: (400)(407) 5: (508)(533) 3: (690)(823)
+
++320
+lectura nodo 2
+lectura nodo 1
+overflow nodo 1, promociona el 320
+lectura nodo 2
+overflow nodo 2, promociona el 390
+escritura nodo 2, nodo 6, nodo 7 y nodo 8
+aumento de la altura
+
+                                             8: 2 (390) 7
+
+                  2: 0 (220) 1 (320) 6                          7: 4 (455) 5 (541) 3
+
+0: (10)(150)      1: (225)(241)     6: (331)(360)        4: (400)(407)   5: (508)(533)   3: (690)(823)
+
+-390 (AL SER UNA BAJA EN UN NODO NO-HOJA, SE REEMPLAZA CON LA MENOR CLAVE DERECHA)
+lectura nodo 8
+underflow nodo 8
+lectura nodo 7
+lectura nodo 4
+escritura nodo 4 y nodo 8
+
+                                           8: 2 (400) 7
+
+                  2: 0 (220) 1 (320) 6                          7: 4 (455) 5 (541) 3
+
+0: (10)(150)      1: (225)(241)     6: (331)(360)         4: (407)   5: (508)(533)   3: (690)(823)
+
+-400 (AL SER UNA BAJA EN UN NODO NO-HOJA, SE REEMPLAZA CON LA MENOR CLAVE DERECHA)
+lectura nodo 8
+underflow nodo 8
+lectura nodo 7 
+lectura nodo 4
+underflow nodo 4, redistribucion con el hermano adyacente derecho (5)
+escritura nodo 4, nodo 7, nodo 5 y nodo 8
+
+                                           8: 2 (407) 7
+
+                  2: 0 (220) 1 (320) 6                          7: 4 (508) 5 (541) 3
+
+0: (10)(150)      1: (225)(241)     6: (331)(360)         4: (455)   5: (533)   3: (690)(823)
+
+-533 
+lectura nodo 8
+lectura nodo 7
+lectura nodo 5
+underflow nodo 5, redistribucion con el hermano adyacente derecho porque con el izq no se puede (3)
+escritura nodo 5, nodo 7 y nodo 3
+
+
+                                           8: 2 (407) 7
+
+                  2: 0 (220) 1 (320) 6                          7: 4 (508) 5 (690) 3
+
+0: (10)(150)      1: (225)(241)     6: (331)(360)         4: (455)   5: (541)   3: (823)
+
+
+

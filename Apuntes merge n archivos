@@ -1,0 +1,73 @@
+MERGE N ARCHIVOS
+ASSIGN Y RESET DE LOS NOMBRES LOGICOS PARA LOS ARCHIVOS DETALLE
+CARGAR LOS REGISTROS/VECTOR DE REGISTROS CON EL PRIMER REGISTRO DE LOS DETALLES
+OBTENER EL MINIMO CON EL MODULO PARA ENTRAR AL WHILE
+while (min.codigo <> valoralto) do begin
+    write (mae, min);
+    minimo (depende de si son pocos detalles o un vector);
+end;
+CLOSE DE TODOS LOS ARCHIVOS
+
+VARIANTE PARA DETALLES REPETIDOS PERO EN ORDEN
+while (min.codigo <> valoralto) do begin
+    aux:= min;
+    total := 0;
+    while (min.codigo = aux.codigo) do begin
+        total := total + min.cant;
+        minimo (depende de si son pocos detalles o un vector);
+    end;
+    aux.cant := total;
+    write (mae, aux);
+end;
+
+MODULO MINIMO PARA MERGE DE N ARCHIVOS (VECTOR DE DET Y REG)
+procedure minimo (var det:vecDet; var reg:vecReg;var min:casos);
+var
+	pos,i:integer;
+begin
+	min.codLocalidad:=valorAlto; min.codCepa:=valorAlto;
+	for i:=1 to dimF do begin
+		if ((reg[i].codLocalidad < min.codLocalidad) and (reg[i].codCepa < min.codCepa)) then begin
+			min:=reg[i];
+			pos:=i;
+		end;
+	end;
+	leer (det[pos],reg[pos]); //PASO AL SIGUIENTE REG DEL MINIMO ENCONTRADO
+end;
+
+INICIALIZACION DEL VECTOR DE DETALLES
+for i:=1 to dimF do begin
+	assign (det[i],'det'+IntToStr(i));
+	reset (det[i]);
+	leer (det[i],reg[i]); //CARGO EL PRIMER REG EN EL VECTOR DE REG
+end;
+assign (mae,'maestro'); reset (mae); read (mae,regm);
+minimo (det,reg,regd);
+
+LOGICA DE LA ACTUALIZACION DEL ARCHIVO MAESTRO
+while (regd.codLocalidad <> valorAlto) do begin
+	cantFallecidos:=0; cantRecuperados:=0; cantActivos:=0; cantNuevos:=0; codLoc:=regd.codLocalidad; codCepa:=regd.codCepa;
+	while ((regd.codLocalidad = codLoc) and (regd.codCepa = codCepa)) do begin
+		cantFallecidos:=cantFallecidos+regd.cantFallecidos;
+		cantRecuperados:=cantRecuperados+regd.casosRecuperados;
+		cantActivos:=cantActivos+regd.casosActivos;
+		cantNuevos:=cantNuevos+regd.casosNuevos;
+		minimo (det,reg,regd);
+	end;
+	regm.cantFallecidos:=regm.cantFallecidos+cantFallecidos; regm.casosRecuperados:=regm.casosRecuperados+cantRecuperados;
+	regm.casosActivos:=cantActivos; regm.casosNuevos:=cantNuevos;
+	while ((codLoc <> regm.codLocalidad) or (codCepa <> regm.codCepa)) do begin
+		read (mae,regm);
+	end;
+	seek (mae,filepos(mae)-1);
+	write (mae,regm);
+	if (not eof (mae)) then
+		read (mae,regm);
+end;
+
+PASOS FINALES
+for i:=1 to dimF do begin
+	close (det[i]);
+end;
+close (mae);
+end.

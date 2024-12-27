@@ -1,0 +1,156 @@
+Dada las siguientes operaciones, mostrar la construcción paso a paso de un árbol B de
+orden 4: +50 , +70, +40, +15, +90, +120, +115, +45, +30, +100, +112, +77, -45, -40, -50, -90,
+-100.
+Política de resolución de underflows: izquierda o derecha.
+
++50
+escritura nodo 0
+
+                    0: (50)
+
++70
+lectura nodo 0
+escritura nodo 0
+
+                    0: (50)(70)
+
++40
+lectura nodo 0
+escritura nodo 0
+
+                    0: (40)(50)(70)
+
++15
+lectura nodo 0
+overflow nodo 0, division y promocion del 50
+escritura nodo 0, 1 y 2
+
+                            2: 0 (50) 1
+
+                    0: (15)(40)        1: (70)
+
++90
+lectura nodo 2 y 1
+escritura nodo 1
+
+                            2: 0 (50) 1
+
+                    0: (15)(40)        1: (70)(90)
+
++120
+lectura nodo 2 y 1
+escritura nodo 1
+
+                            2: 0 (50) 1
+
+                    0: (15)(40)        1: (70)(90)(120)
+
++115
+lectura nodo 2 y 1
+overflow nodo 1, division y promocion del 115
+
+                        2: 0 (50) 1 (115) 3 
+
+                0: (15)(40)   1: (70)(90)   3: (120)
+
++45
+lectura nodo 2 y 0
+escritura nodo 0
+
+                           2: 0 (50) 1 (115) 3 
+
+                0: (15)(40)(45)   1: (70)(90)   3: (120)
+
++30
+lectura nodos 2 y 0
+overflow nodo 0, division y promocion del 40
+
+                        2: 0 (40) 4 (50) 1 (115) 3 
+
+             0: (15)(30)     4: (45)     1: (70)(90)    3: (120)
+
++100
+lectura nodo 2 y 1
+escritura nodo 1
+
+                        2: 0 (40) 4 (50) 1 (115) 3 
+
+             0: (15)(30)     4: (45)     1: (70)(90)(100)    3: (120)
+
++112
+lectura nodo 2 y 1
+overflow nodo 1, division y promocion del 100
+overflow nodo 2, division y promocion del 100
+escritura nodos 1, 2, 5, 6 y 7
+
+                                        7: 2 (100) 
+
+                 2: 0 (40) 4 (50)  1                  6: 5 (115) 3
+
+        0: (15)(30)    4: (45)    1: (70)(90)      5: (112)    3: (120)
+
++77
+lectura nodos 7, 2 y 1
+escritura nodo 1
+
+                                        7: 2 (100) 
+
+                 2: 0 (40) 4 (50)  1                  6: 5 (115) 3
+
+        0: (15)(30)    4: (45)    1: (70)(77)(90)      5: (112)    3: (120)
+
+-45
+lectura nodo 7, 2 y 4
+underflow nodo 4, politica izq, redistribuyo con el nodo 0
+
+                                        7: 2 (100) 
+
+                 2: 0 (30) 4 (50)  1                  6: 5 (115) 3
+
+        0: (15)    4: (40)    1: (70)(77)(90)       5: (112)    3: (120)
+
+-40
+lectura nodos 7, 2 y 4
+underflow nodo 4, politica izq no puedo, der si, redistribuyo
+
+                                        7: 2 (100) 
+
+                 2: 0 (30) 4 (70)  1                  6: 5 (115) 3
+
+        0: (15)    4: (50)    1: (77)(90)          5: (112)    3: (120)
+
+-50
+lectura nodos 7, 2 y 4
+underflow nodo 4, politica izq no puedo, der si, redistribuyo
+
+                                        7: 2 (100) 
+
+                 2: 0 (30) 4 (77)  1                  6: 5 (115) 3
+
+        0: (15)    4: (70)    1: (90)             5: (112)    3: (120)
+
+-90
+lectura nodos 7, 2 y 1
+underflow nodo 1, politica izq y der no puedo, concateno con la izq (baja el 77)
+escritura nodos 2 y 4
+
+                                7: 2 (100) 
+
+                2: 0 (30) 4                  6: 5 (115) 3
+
+           0: (15)      4: (70)(77)        5: (112)    3: (120)
+
+
+-100
+lectura nodo 7
+no es una hoja, asi que lo reemplazo con la menor clave izq
+lectura nodo 6 y 5
+concateno nodo 6 con el 3
+underflow nodo 7, concateno con la izq
+el arbol dismuye 1 nivel
+escritura nodos 2 y 5
+(ESTA RE BIEN RESUELTOOOOOOOO ES RARO PERO ANALIZAR COMO SE PROPAGOOOO)
+
+                    2: 0 (30) 4  (112) 6           
+
+          0: (15)      4: (70)(77)        5: (115)(120)

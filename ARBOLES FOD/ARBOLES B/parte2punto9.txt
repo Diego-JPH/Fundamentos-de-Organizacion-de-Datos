@@ -1,0 +1,57 @@
+Dado el siguiente árbol B de orden 6, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +15, +71, +3, +48, -56, -71.
+Política de resolución de underflows: derecha o izquierda.
+
+                    0: (34) (56) (78) (100) (176)
+
++15
+lectura nodo 0
+overflow en nodo 0, divison y promocion del 78
+escritura nodo 0, 1 y 2
+
+                       2: 0 (78) 1
+
+         0: (15)(34)(56)         1: (100)(176) 
+
++71
+lectura nodo 2
+escritura nodo 0
+
+                           2: 0 (78) 1
+
+         0: (15)(34)(56)(71)         1: (100)(176) 
+
++3
+lectura nodo 2 y 0
+escritura nodo 0
+
+                           2: 0 (78) 1
+
+         0: (3)(15)(34)(56)(71)         1: (100)(176) 
+
++48
+lectura nodo 2 y 0
+overflow nodo 0, division y promocion del 48
+escritura nodos 2, 0 y 3
+
+                           2: 0 (48) 3 (78) 1
+
+              0: (3)(15)(34)   3: (56)(71)      1: (100)(176) 
+         
+-56
+lectura nodo 2 y 3
+underflow nodo 3, politica derecha o izquierda, no puedo derecha, redistribuyo con la izquierda promocion del 34
+escritura nodo 0, 2 y 3
+
+                              2: 0 (34) 3 (78) 1
+
+                   0: (3)(15)   3: (48)(71)      1: (100)(176) 
+         
+-71
+lectura nodo 2 y 3
+underflow nodo 3, politica der o izq, no puedo ninguna, por lo tanto concateno con la derecha
+
+                             2: 0 (34) 1 
+
+                       0: (3)(15)       1: (48)(78)(100)(176)   
+         

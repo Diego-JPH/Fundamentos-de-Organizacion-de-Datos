@@ -1,0 +1,50 @@
+Dado el siguiente árbol B + de orden 4 y con política de resolución de underflows a
+derecha, realice las siguientes operaciones indicando lecturas y escrituras en el orden
+de ocurrencia. Además, debe describir detalladamente lo que sucede en cada
+operación. +80, -400.
+
+                      4: 0 (340) 1 (400) 2 (500) 3
+
+0: (11)(50)(77) 1 1: (340)(350)(360) 2 2: (402)(410)(420) 3 3: (520)(530) -1
+
++80
+lectura nodos 4 y 0
+overflow nodo 0, division y promocion del 77 (al ser B+ la clave 77 tambien se escribe a la derecha)
+overflow nodo 4, division y promocion del 400 (como no es una hoja, el overflow se propaga normalmente como arbol B)
+escritura nodos 0, 4, 5, 6 y 7
+
+                                             7: 4 (400) 6
+
+                   4: 0 (77) 5 (340) 1                            6: 2 (500) 3
+
+   0: (11)(50) 5 5: (77)(80) 1 1: (340)(350)(360) 2 2: (402)(410)(420) 3 3: (520)(530)
+
+-400
+lectura nodo 7
+no es una hoja, asi que reemplazo la clave con la minima clave derecha
+lectura nodos 6 y 2
+escritura nodos 2 y 7
+(Como es un arbol B+ y los nodos internos solo guian la busqueda, solo reemplazo
+pero no elimino la clave en el nodo hoja 2 (402))
+(RECORDAR QUE CUANDO OCURREN ESTOS REEMPLAZOS POR BAJAS
+EN LA RAIZ, SIEMPRE SE VA A REEMPLAZAR POR LA MINIMA CLAVE DERECHA)
+
+                                              7: (402)
+
+                   4: 0 (77) 5 (340) 1                            6: 2 (500) 3
+
+   0: (11)(50) 5 5: (77)(80) 1 1: (340)(350)(360) 2 2: (402)(410)(420) 3 3: (520)(530) -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+

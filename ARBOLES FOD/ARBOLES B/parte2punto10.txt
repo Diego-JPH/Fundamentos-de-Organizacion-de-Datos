@@ -1,0 +1,50 @@
+Dado el siguiente árbol B de orden 5, mostrar cómo quedaría el mismo luego de realizar
+las siguientes operaciones: +450, -485, -511, -614.
+Política de resolución de underflows: derecha.
+
+                          2: 0 (315) 1 (485) 4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)(442)(454)   4: (508)(511)   5: (614)(633)   3: (789)(915)
+
++450
+lectura nodos 2 y 1
+overflow nodo 1, divison y promocion del 450
+
+                                          8: 2 (485) 7
+
+                  2: 0 (315) 1 (442) 6                        7:  4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)      4: (508)(511)   5: (614)(633)   3: (789)(915)
+
+-485
+lectura nodo 8
+no es una hoja, asi que lo reemplazo con la minima clave derecha
+escritura nodo 8 y 4 (cumple con tener almenos (m/2)-1 claves, asi que no hay overflow)
+
+                                          8: 2 (508) 7
+
+                  2: 0 (315) 1 (442) 6                        7:  4 (547) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)      4: (511)   5: (614)(633)   3: (789)(915)
+
+-511
+lectura nodos 8, 7 y 4
+overflow nodo 4, redistribuyo con el hijo adyacente derecho
+escritura nodos 7, 4 y 5
+
+                                            8: 2 (508) 7
+
+                  2: 0 (315) 1 (442) 6                        7:  4 (614) 5 (639) 3
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)             4: (547)   5: (633)   3: (789)(915)
+
+-614
+lectura nodos 8 y 7
+underflow en el nodo 7, politica derecha no lo puedo usar, asi que concateno (medio raro xd)
+escritura nodos 7 y 5, desaparece el 3
+                                          8: 2 (508) 7
+
+                  2: 0 (315) 1 (442) 6                     7:  4 (639) 5 
+
+0: (148)(223)   1: (333)(390)   6: (450)(454)             4: (547)   5: (633)(639)(789)(915)  
+

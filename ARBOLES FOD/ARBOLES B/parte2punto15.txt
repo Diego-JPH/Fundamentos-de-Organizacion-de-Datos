@@ -1,0 +1,201 @@
+Dada las siguientes operaciones, mostrar cómo se construye el árbol B de orden 4: +65,
++89, +23, +45, +20, +96, +10, +55, -23, +110, +50, -10, +25, -50, -45, +120, +130, +70, +75,
++73, +100, -120, -110.
+Política de resolución de underflows: derecha.
+
++65
+escritura nodo 0
+
+                    0: (65)
+
++89
+lectura nodo 0
+escritura nodo 0
+
+                    0: (65)(89)
+
++23
+lectura nodo 0
+escritura nodo 0
+
+                    0: (23)(65)(89)
+
++45
+lectura nodo 0
+overflow nodo 0, divido y promociona el 65
+escritura nodos 0, 1 y 2
+
+                    2: 0 (65) 1
+
+             0: (23)(45)     1: (89)
+
++20
+lectura nodos 2 y 0
+escritura nood 0
+
+                    2: 0 (65) 1
+
+             0: (20)(23)(45)     1: (89)
+
++96
+lectura nodos 2 y 1
+escritura nodo 1
+
+                    2: 0 (65) 1
+
+             0: (20)(23)(45)     1: (89)(96)
+
++10
+lectura nodos 2 y 0
+overflow nodo 0, divido y promociona el 23
+
+                    2: 0 (23) 3 (65) 1
+
+             0: (10)(20)  3: (45)   1: (89)(96)
+
++55
+lectura nodos 2 y 3
+escritura nodo 3
+
+                       2: 0 (23) 3 (65) 1
+
+             0: (10)(20)  3: (45)(55)   1: (89)(96)
+
+-23
+lectura nodo 2
+no es una hoja, por lo que reemplazo con la menor clave derecha
+lectura nodo 3
+escritura nodos 2 y 3
+
+                       2: 0 (45) 3 (65) 1
+
+               0: (10)(20)  3: (55)   1: (89)(96)
+
++110
+lectura nodos 2 y 1
+escritura nodo 1
+
+                       2: 0 (45) 3 (65) 1
+
+               0: (10)(20)  3: (55)   1: (89)(96)(110)
+
++50
+lectura nodos 2 y 3
+escritura nodo 3
+
+                         2: 0 (45) 3 (65) 1
+
+               0: (10)(20)  3: (50)(55)   1: (89)(96)(110)
+
+-10
+lectura nodos 2 y 0
+escritura nodo 0
+
+                         2: 0 (45) 3 (65) 1
+
+               0: (20)  3: (50)(55)   1: (89)(96)(110)
+
++25
+lectura nodos 2 y 0
+escritura nodo 0
+
+                          2: 0 (45) 3 (65) 1
+
+               0: (20)(25)  3: (50)(55)   1: (89)(96)(110)
+
+-50
+lectura nodos 2 y 3
+escritura nodo 3
+
+                          2: 0 (45) 3 (65) 1
+
+               0: (20)(25)  3: (55)   1: (89)(96)(110)
+
+-45
+lectura nodo 2
+no es una hoja, por lo que reemplazo con la menor clave derecha
+lectura nodo 3
+underflow nodo 3, politica der, redistribuyo con el hijo adyacente derecho
+escritura nodos 2, 3 y 1
+
+                          2: 0 (55) 3 (89) 1
+
+                 0: (20)(25)    3: (65)   1: (96)(110)
+
++120
+lectura nodos 2 y 1
+escritura nodo 1
+
+                          2: 0 (55) 3 (89) 1
+
+                 0: (20)(25)    3: (65)   1: (96)(110)(120)
+
++130
+lectura nodos 2 y 1
+overflow nodo 1, division y promocion del 120
+escritura nodos 1, 2 y 4
+
+                              2: 0 (55) 3 (89) 1 (120) 4
+
+                 0: (20)(25)    3: (65)   1: (96)(110)   4: (130)
+
++70
+lectura nodos 2 y 3
+escritura nodo 3
+
+                               2: 0 (55) 3 (89) 1 (120) 4
+
+                 0: (20)(25)    3: (65)(70)   1: (96)(110)   4: (130)
+
++75
+lectura nodos 2 y 3
+escritura nodo 3
+
+                                 2: 0 (55) 3 (89) 1 (120) 4
+
+                 0: (20)(25)    3: (65)(70)(75)   1: (96)(110)   4: (130)
+
++73
+lectura nodos 2 y 3
+overflow nodo 3, division y promocion del 73
+overflow nodo 2, division y promocion del 89
+escritura nodos 2, 3, 5, 6, y 7
+
+                                            7: 2 (89) 6                                       
+
+                       2: 0 (55) 3 (73) 5                   6: 1 (120) 4
+
+             0: (20)(25)    3: (65)(70)  5: (75)       1: (96)(110)   4: (130)
+
++100
+lectura nodos 7, 6 y 1
+escritura nodo 1
+
+                                                7: 2 (89) 6                                       
+
+                       2: 0 (55) 3 (73) 5                        6: 1 (120) 4
+
+             0: (20)(25)    3: (65)(70)  5: (75)       1: (96)(100)(110)   4: (130)
+
+-120
+lectura nodos 7 y 6
+underflow nodo 6, politica der no puedo, redistribuyo con el izq
+escritura nodos 6 y 1
+
+                                             7: 2 (89) 6                                       
+
+                       2: 0 (55) 3 (73) 5                    6: 1 (110) 4
+
+             0: (20)(25)    3: (65)(70)  5: (75)       1: (96)(100)   4: (130)
+
+-110
+lectura nodos 7 y 6
+underflow nodo 6, politica der no puedo, redistribuyo con la izq
+escritura nodos 6 y 1
+
+                                            7: 2 (89) 6                                       
+
+                       2: 0 (55) 3 (73) 5                 6: 1 (100) 4
+
+             0: (20)(25)    3: (65)(70)  5: (75)       1: (96)   4: (130)
+
